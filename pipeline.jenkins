@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps{
+                git branch: 'main',
+                    url: 'https://github.com/gh9ew3/springboot-hello.git'    
+                }
+        }
+        stage('Build docker image') {
+            steps{
+                sh 'docker build -t gh9ew3/springboot:v1 .'
+            }
+        }
+        stage('Push docker image to DockerHub') {
+            steps{
+                withDockerRegistry(credentialsId: 'dockerhab-cred', url: 'https://index.docker.io/v1/') {
+                    sh '''
+                        docker push gh9ew3/springboot:v1
+                    '''
+                }
+            }
+        }
+    
+        
+    }
+}
