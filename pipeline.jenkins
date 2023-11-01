@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Push docker image to DockerHub') {
             steps{
-                withDockerRegistry(credentialsId: 'dockerhab-cred', url: 'https://index.docker.io/v1/') {
+                withDockerRegistry(credentialsId: 'dockerhub-cred', url: 'https://index.docker.io/v1/') {
                     sh '''
                         docker push gh9ew3/springboot:v2
                     '''
